@@ -1,8 +1,6 @@
 package task;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Predicate;
 /**
  * The following mock program passes on our development machines,
@@ -60,13 +58,13 @@ public class SmallMemoryMessageTest {
     public static void main(String []args) {
         MessageProcessor processor = Util.createMessageProcessor();
         MessageArchiver archiver = Util.createMessageArchiver();
-        List<Message> messages = new ArrayList<>(Util.EXPECTED_TOTAL);
+        Deque<Message> messages = new ArrayDeque<>(Util.EXPECTED_TOTAL);
         for (int i = 0; i < Util.EXPECTED_TOTAL; i++) {
             Message msg = Util.random();
             processor.processMessage(msg);
             messages.add(msg);
         }
-        archiver.archiveMessages(messages, m -> m.getSubject().startsWith("A"));
+        archiver.archiveMessages(new ArrayList<>(messages), m -> m.getSubject().startsWith("A"));
         /*
          * DO NOT CHANGE ANYTHING BELOW THIS LINE.
          * PROGRAM MUST EXIT SUCCESSFULLY
